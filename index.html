@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml"/>
+    <link href="src/style.css" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books</title>
+  </head>
+  <body>
+
+      <div class="container">
+
+        <main class="main">
+
+          <header class="header">
+            <h1 class="header-title">List of books, manga and light novel</h1>
+            <p class="header-subtitle">Add, follow what you've read, mark your favorites</p>
+          </header>
+
+          <form class="form">
+            <div class="form-input">
+              <input id="formInput" type="text" placeholder="Title">
+              <button>Add</button>
+            </div>
+
+            <div class="form-status">
+              <label for="statusSelect">Status:</label>
+              <select id="statusSelect">
+                <option value="want">Want to Read</option>
+                <option value="reading">Reading</option>
+                <option value="read">Read</option>
+                <option value="favorite">Favorite</option>
+              </select>
+            </div>
+          </form>
+
+
+          <div class="filter">
+            <div class="filter-buttons">
+              <p>Filter:</p>
+              <button data-filter="all">All</button>
+              <button data-filter="want">Want to Read</button>
+              <button data-filter="reading">Reading</button>
+              <button data-filter="read">Read</button>
+              <button data-filter="favorite">Favorite</button>
+            </div>
+          </div>
+
+          <ul class="list"></ul>
+
+        </main>
+
+      </div>
+
+      <script src="src/main.js"></script>
+  </body>
+</html>

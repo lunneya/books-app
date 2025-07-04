@@ -1,0 +1,246 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.container {
+    width: 800px;
+    height: 100vh;
+    background-color: #FBFAF9;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.header {
+    width: 632px;
+    height: 160px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 32px;
+}
+
+.header-title {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.header-subtitle {
+    font-size: 16px;
+    color: #777;
+}
+
+
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.form {
+    width: 632px;
+    height: auto;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 32px;
+    gap: 16px;
+}
+
+.form-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+}
+
+.form-input {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.form-status select {
+
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.form input {
+    width: 200px;
+    height: 40px;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.form button {
+    width: 100px;
+    height: 40px;
+    padding: 12px 24px;
+    background-color: #2d80e0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form button:hover {
+    background-color: #1c66be;
+}
+
+.status {
+    width: 632px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+}
+
+.status select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.filter {
+    width: 632px;
+    height: auto;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+.filter-buttons p {
+    font-size: 16px;
+}
+
+.filter-buttons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.filter-buttons button {
+    padding: 8px 16px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-buttons button:hover {
+    background-color: #ddd;
+}
+
+.filter-buttons button.active {
+    background-color: #2d80e0;
+    color: white;
+    border-color: #2d80e0 ;
+}
+
+.list {
+    width: 632px;
+    min-height: 200px;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    max-height: 404px;
+}
+
+.list-books {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+}
+
+.list-title {
+    font-size: 18px;
+    color: #333;
+}
+
+.list-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.list-status {
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.list-hide {
+    display: none;
+}
+
+.delete-btn {
+    background-color: transparent;
+    border: none;
+    color: #d33;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.delete-btn:hover {
+    color: #a00;
+}
