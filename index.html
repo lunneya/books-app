@@ -18,36 +18,73 @@
             <p class="header-subtitle">Add, follow what you've read, mark your favorites</p>
           </header>
 
-          <form class="form">
-            <div class="form-input">
-              <input id="formInput" type="text" placeholder="Title">
-              <button>Add</button>
-            </div>
-
-            <div class="form-status">
-              <label for="statusSelect">Status:</label>
-              <select id="statusSelect">
-                <option value="want">Want to Read</option>
-                <option value="reading">Reading</option>
-                <option value="read">Read</option>
-                <option value="favorite">Favorite</option>
-              </select>
-            </div>
-          </form>
-
-
           <div class="filter">
-            <div class="filter-buttons">
-              <p>Filter:</p>
-              <button data-filter="all">All</button>
-              <button data-filter="want">Want to Read</button>
-              <button data-filter="reading">Reading</button>
-              <button data-filter="read">Read</button>
-              <button data-filter="favorite">Favorite</button>
+            <div class="filterBy">
+              <div class="filterBy-select">
+                <label for="filterBy">Find a book by:</label>
+                <select id="filterBy">
+                  <option value="title">Title</option>
+                  <option value="author">Author</option>
+                  <option value="date">Date</option>
+                </select>
+                <input id="filterByValue" type="text" placeholder="Search...">
+              </div>
+              <div class="filterBy-btn">
+                <button id="searchValue">Search</button>
+                <button id="clearSearch">Clear</button>
+              </div>
+
             </div>
+
+            <div class="filterByStatus">
+              <div class="filterByStatus-buttons">
+                <label for="statusFilter">Filter:</label>
+                <select id="statusFilter">
+                  <option value="all">All</option>
+                  <option value="want">Want to Read</option>
+                  <option value="reading">Reading</option>
+                  <option value="read">Read</option>
+                  <option value="favorite">Favorite</option>
+                </select>
+                <div class="modalBtn">
+                  <button id="btn-modal">Add book</button>
+                </div>
+              </div>
+            </div>
+
+
           </div>
 
           <ul class="list"></ul>
+
+          <div class="modal">
+            <div class="modal-container">
+
+              <div class="modal-header">
+                <h1>Создание книги</h1>
+                <div data-action="close" class="close-btn">✕</div>
+              </div>
+
+                <form class="form">
+                  <div class="form-input">
+                    <input id="formInputTitle" type="text" placeholder="Title">
+                    <input id="formInputAuthor" type="text" placeholder="Author">
+                    <input id="formInputDate" type="text" placeholder="Date">
+                  </div>
+
+                  <div class="form-status">
+                    <label for="statusSelect">Status</label>
+                    <select id="statusSelect">
+                      <option value="want">Want to Read</option>
+                      <option value="reading">Reading</option>
+                      <option value="read">Read</option>
+                      <option value="favorite">Favorite</option>
+                    </select>
+                    <button>Add</button>
+                  </div>
+                </form>
+              </div>
+            </div>
 
         </main>
 
