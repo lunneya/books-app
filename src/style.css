@@ -27,12 +27,8 @@ body {
 /* HEADER */
 .header {
     width: 100%;
-    background-color: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 32px;
     text-align: center;
-    margin-bottom: 24px;
 }
 
 .header-title {
@@ -59,6 +55,7 @@ body {
     width: 100%;
     background-color: white;
     border-radius: 16px;
+    border: 1px solid silver;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 24px;
     display: flex;
@@ -69,11 +66,15 @@ body {
 /* Filter by Title/Author/Date */
 .filterBy {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
     gap: 32px;
 }
 
-.filterBy-select,
+.filterBy-inputs,
 .filterBy-btn {
     display: flex;
     flex-direction: column;
@@ -91,12 +92,14 @@ body {
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 14px;
-    width: 220px;
+    width: 250px;
 }
 
 .filterBy button {
+    width: 250px;
+    height: 40px;
     padding: 10px;
-    background-color: #2d80e0;
+    background-color: teal;
     color: white;
     border: none;
     border-radius: 8px;
@@ -106,41 +109,54 @@ body {
 }
 
 .filterBy button:hover {
-    background-color: #1c66be;
+    background-color: darkslategrey;
 }
 
 /* Status filter */
+.filterByStatus {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+
 .filterByStatus-buttons {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     gap: 12px;
 }
 
 .filterByStatus select {
+    width: 250px;
     padding: 10px 12px;
     border-radius: 8px;
     font-size: 14px;
 }
 
 .modalBtn button {
-    background-color: #2d80e0;
+    width: 250px;
+    height: 40px;
+    background-color: teal;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 8px;
     font-size: 14px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .modalBtn button:hover {
-    background-color: #1c66be;
+    background-color: darkslategrey;
 }
 
 /* BOOKS LIST */
 .list {
     width: 100%;
     background-color: white;
+    border: 1px solid silver;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 16px;
@@ -182,6 +198,77 @@ body {
 
 .list-hide {
     display: none;
+}
+
+/*TABLE*/
+.table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.table-content {
+    display: flex;
+}
+
+.table-content-button {
+    flex: 1;
+    height: 40px;
+
+    background-color: white;
+    border: 1px solid silver;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.table-content-button:last-child {
+    border-right: 1px solid #ddd;
+}
+
+.table-content-button.side-left {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.table-content-button.side-right {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.table-content-button:hover {
+    background-color: silver;
+}
+
+.arrows {
+    display: flex;
+    flex-direction: column;
+}
+
+.arrow-up,
+.arrow-down {
+    font-size: 15px;
+    color: #333;
+    line-height: 10px;
+    transition: color 0.2s;
+}
+
+.table-content-button.asc .arrow-up {
+    color: #2b80e0;
+}
+
+.table-content-button.desc .arrow-down {
+    color: #2b80e0;
 }
 
 /* MODAL */
@@ -267,15 +354,16 @@ body {
 }
 
 .form button {
-    background-color: #2d80e0;
+    background-color: teal;
     color: white;
     border: none;
     height: 40px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
+    transition: background-color 0.3s ease;
 }
 
 .form button:hover {
-    background-color: #1c66be;
+    background-color: darkslategrey;
 }

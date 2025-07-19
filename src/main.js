@@ -14,13 +14,22 @@ const modalBtn = document.querySelector("#btn-modal")
 const closeModalBtn = document.querySelector(".close-btn");
 
 // filter by title, author, date
-const filterBy = document.querySelector("#filterBy"); // Select
-const filterByValue = document.querySelector("#filterByValue"); // Input
+const filterByTitle = document.querySelector("#filterByTitle");
+const filterByAuthor = document.querySelector("#filterByAuthor");
+const filterByDate = document.querySelector("#filterByDate");
+
 const filterByBtn = document.querySelector("#searchValue"); // Button
 const clearFilter = document.querySelector("#clearSearch"); // Clear filter
 
-let searchField = 'title';
 let books = [];
+
+if (localStorage.getItem('books')) {
+    const savedBooks = JSON.parse(localStorage.getItem('books'));
+    if (Array.isArray(savedBooks)) {
+        books = savedBooks;
+    }
+}
+renderBooks();
 
 form.addEventListener("submit", addBook);
 booksList.addEventListener("click", deleteBook);
@@ -28,7 +37,11 @@ filter.addEventListener("click", filterBooks);
 modalBtn.addEventListener("click", showModal);
 closeModalBtn.addEventListener("click", closeModal);
 
-filterBy.addEventListener("change", filterSelect); // Listens select
+// filter by values
+filterByTitle.addEventListener("input", filterBtn);
+filterByAuthor.addEventListener("input", filterBtn);
+filterByDate.addEventListener("input", filterBtn);
+
 filterByBtn.addEventListener("click", filterBtn); // Listens for input, when a button pressed
 clearFilter.addEventListener("click", clearFilterBooks)
 
@@ -49,6 +62,7 @@ function addBook(e) {
     }
 
     books.push(newBook);
+    saveToLocalStorage();
     renderBooks();
 
     formInputTitle.value= "";
@@ -71,6 +85,8 @@ function deleteBook(e) {
     // Delete book in books
     books.splice(bookIndex, 1);
 
+    saveToLocalStorage();
+
     // Delete e.target.closest("li")
     parentNode.remove();
 }
@@ -91,10 +107,10 @@ function filterBooks(e) {
     });
 }
 
-// Если параметра нет, то проиходит рендер всех книг
-// Если есть параметр, то проиходит рендрер книги из параметра
+// Если параметра нет, то происходит рендер всех книг
+// Если есть параметр, то происходит рендер книги из параметра
 function renderBooks(b) {
-const booksForRender = b || books;
+const booksForRender = Array.isArray(b) ? b : (b ? [b] : books);
     booksList.innerHTML = "";
     booksForRender.forEach(book => {
         const booksHTML = `<li class="list-books book" data-status="${book.status}">
@@ -108,6 +124,7 @@ const booksForRender = b || books;
             </li>`
 
         booksList.insertAdjacentHTML('beforeend', booksHTML);
+        console.log('Render books', booksForRender);
     });
 }
 
@@ -119,20 +136,40 @@ function closeModal() {
     modalWindow.classList.remove("show");
 }
 
-function filterSelect(e) {
-    searchField = e.target.value;
-}
+function filterBtn(e) {
 
-function filterBtn() {
-    const inputValue = filterByValue.value.toLowerCase();
+    // Собираем все значения из inputs в объект
+    const filters = {
+        title: filterByTitle.value.trim().toLowerCase(),
+        author: filterByAuthor.value.trim().toLowerCase(),
+        date: filterByDate.value.trim().toLowerCase(),
+    };
 
-    const filteredBooks = books.filter(book =>{
-        return book[searchField].toLowerCase().includes(inputValue);
-    });
 
-    renderBooks(filteredBooks);
+    if (e.target === filterByBtn) {
+        // Фильтруем книги
+        const filteredBooks = books.filter(book => {
+            // Object.keys(filters) создаем массив: ['title', 'author', 'date']
+            // .every() проверяет, что каждое из условий true
+            return Object.keys(filters).every(key => {
+
+                // Если input пустой — не фильтруем || проверяем, что книга включает в себя введенное значение
+                // String.prototype.includes отвечает за проверку, если введенное значение присутствует
+                return filters[key] === "" || book[key].toLowerCase().includes(filters[key]);
+            });
+        });
+
+        renderBooks(filteredBooks);
+    }
 }
 
 function clearFilterBooks() {
+    filterByTitle.value = "";
+    filterByAuthor.value = "";
+    filterByDate.value = "";
     renderBooks();
+}
+
+function saveToLocalStorage() {
+    localStorage.setItem('books', JSON.stringify(books));
 }

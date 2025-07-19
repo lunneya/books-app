@@ -19,26 +19,24 @@
           </header>
 
           <div class="filter">
+
             <div class="filterBy">
-              <div class="filterBy-select">
-                <label for="filterBy">Find a book by:</label>
-                <select id="filterBy">
-                  <option value="title">Title</option>
-                  <option value="author">Author</option>
-                  <option value="date">Date</option>
-                </select>
-                <input id="filterByValue" type="text" placeholder="Search...">
-              </div>
-              <div class="filterBy-btn">
-                <button id="searchValue">Search</button>
-                <button id="clearSearch">Clear</button>
+              <div class="filterBy-inputs">
+                <span>Filter by:</span>
+                <input id="filterByTitle" type="text" placeholder="Title"/>
+                <input id="filterByAuthor" type="text" placeholder="Author"/>
+                <input id="filterByDate" type="text" placeholder="Date"/>
+                <div class="filterBy-btn">
+                  <button id="searchValue">Search</button>
+                  <button id="clearSearch">Clear</button>
+                </div>
               </div>
 
             </div>
 
             <div class="filterByStatus">
               <div class="filterByStatus-buttons">
-                <label for="statusFilter">Filter:</label>
+                <label for="statusFilter">Filter by status:</label>
                 <select id="statusFilter">
                   <option value="all">All</option>
                   <option value="want">Want to Read</option>
@@ -46,13 +44,39 @@
                   <option value="read">Read</option>
                   <option value="favorite">Favorite</option>
                 </select>
-                <div class="modalBtn">
-                  <button id="btn-modal">Add book</button>
-                </div>
               </div>
             </div>
 
+          </div>
 
+                <div class="modalBtn">
+                  <button id="btn-modal">Add book</button>
+                </div>
+
+          <div class="table">
+            <div class="table-content">
+              <button class="table-content-button side-left">
+                Title
+                <span class="arrows">
+                  <span class="arrow-up">&#9650;</span>
+                  <span class="arrow-down">&#9660;</span>
+                </span>
+              </button>
+              <button class="table-content-button">
+                Author
+                <span class="arrows">
+                  <span class="arrow-up">&#9650;</span>
+                  <span class="arrow-down">&#9660;</span>
+                </span>
+              </button>
+              <button class="table-content-button side-right">
+                Date
+                <span class="arrows">
+                  <span class="arrow-up">&#9650;</span>
+                  <span class="arrow-down">&#9660;</span>
+                </span>
+              </button>
+            </div>
           </div>
 
           <ul class="list"></ul>
