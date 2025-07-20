@@ -21,6 +21,9 @@ const filterByDate = document.querySelector("#filterByDate");
 const filterByBtn = document.querySelector("#searchValue"); // Button
 const clearFilter = document.querySelector("#clearSearch"); // Clear filter
 
+// table
+const btnArrow = document.querySelectorAll(".table-content-button");
+
 let books = [];
 
 if (localStorage.getItem('books')) {
@@ -45,6 +48,28 @@ filterByDate.addEventListener("input", filterBtn);
 filterByBtn.addEventListener("click", filterBtn); // Listens for input, when a button pressed
 clearFilter.addEventListener("click", clearFilterBooks)
 
+// listens table btn
+btnArrow.forEach(btn => {
+    btn.addEventListener("click", () => {
+        // Убираем классы у всех кнопок
+        btnArrow.forEach(button => {
+            if (button !== btn) button.classList.remove('asc', 'desc');
+        })
+
+        // Добавляем к активной кнопке
+        if (btn.classList.contains('asc')) {
+            btn.classList.remove('asc');
+            btn.classList.add('desc');
+        } else if (btn.classList.contains('desc')) {
+            btn.classList.remove('desc');
+            btn.classList.add('asc');
+        } else {
+            btn.classList.add('asc');
+        }
+    });
+});
+
+// functions
 function addBook(e) {
     e.preventDefault();
 

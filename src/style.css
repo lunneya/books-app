@@ -264,11 +264,19 @@ body {
 }
 
 .table-content-button.asc .arrow-up {
-    color: #2b80e0;
+    color: teal;
+}
+
+.table-content-button.asc .arrow-down {
+    color: #bbb;
+}
+
+.table-content-button.desc .arrow-up {
+    color: #bbb;
 }
 
 .table-content-button.desc .arrow-down {
-    color: #2b80e0;
+    color: teal;
 }
 
 /* MODAL */
