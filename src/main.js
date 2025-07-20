@@ -1,14 +1,14 @@
-// Form
+// form
 const form = document.querySelector(".form");
 const formInputTitle = document.querySelector("#formInputTitle");
 const formInputAuthor = document.querySelector("#formInputAuthor");
 const formInputDate = document.querySelector("#formInputDate");
 const formStatus = document.querySelector("#statusSelect");
-// Filter
+// filter
 const filter = document.querySelector(".filterByStatus");
-// Render
+// render
 const booksList = document.querySelector(".list");
-// Modal
+// modal
 const modalWindow = document.querySelector(".modal");
 const modalBtn = document.querySelector("#btn-modal")
 const closeModalBtn = document.querySelector(".close-btn");
@@ -18,21 +18,20 @@ const filterByTitle = document.querySelector("#filterByTitle");
 const filterByAuthor = document.querySelector("#filterByAuthor");
 const filterByDate = document.querySelector("#filterByDate");
 
-const filterByBtn = document.querySelector("#searchValue"); // Button
-const clearFilter = document.querySelector("#clearSearch"); // Clear filter
+const filterByBtn = document.querySelector("#searchValue"); // button
+const clearFilter = document.querySelector("#clearSearch"); // clear filter
 
 // table
 const btnArrow = document.querySelectorAll(".table-content-button");
 
 let books = [];
+let originalBooks = [];
 
 if (localStorage.getItem('books')) {
-    const savedBooks = JSON.parse(localStorage.getItem('books'));
-    if (Array.isArray(savedBooks)) {
-        books = savedBooks;
-    }
+    books = JSON.parse(localStorage.getItem('books'));
+    originalBooks = [...books];
+    renderBooks(books);
 }
-renderBooks();
 
 form.addEventListener("submit", addBook);
 booksList.addEventListener("click", deleteBook);
@@ -45,29 +44,11 @@ filterByTitle.addEventListener("input", filterBtn);
 filterByAuthor.addEventListener("input", filterBtn);
 filterByDate.addEventListener("input", filterBtn);
 
-filterByBtn.addEventListener("click", filterBtn); // Listens for input, when a button pressed
+filterByBtn.addEventListener("click", filterBtn); // listens for input, when a button pressed
 clearFilter.addEventListener("click", clearFilterBooks)
 
 // listens table btn
-btnArrow.forEach(btn => {
-    btn.addEventListener("click", () => {
-        // Убираем классы у всех кнопок
-        btnArrow.forEach(button => {
-            if (button !== btn) button.classList.remove('asc', 'desc');
-        })
-
-        // Добавляем к активной кнопке
-        if (btn.classList.contains('asc')) {
-            btn.classList.remove('asc');
-            btn.classList.add('desc');
-        } else if (btn.classList.contains('desc')) {
-            btn.classList.remove('desc');
-            btn.classList.add('asc');
-        } else {
-            btn.classList.add('asc');
-        }
-    });
-});
+btnArrow.forEach(btn => btn.addEventListener("click", stateArrow));
 
 // functions
 function addBook(e) {
@@ -186,6 +167,51 @@ function filterBtn(e) {
 
         renderBooks(filteredBooks);
     }
+}
+
+function stateArrow(e) {
+    const btn = e.currentTarget;
+    const sortKey = btn.dataset.key;
+
+    // Если btn = e.currentTarget не равняется новой кнопкой, по которой произошло нажатие, то
+    btnArrow.forEach(button => {
+        if (button !== btn) button.classList.remove('asc', 'desc');
+    })
+
+    const asc = btn.classList.contains('asc'); // arrow up
+    const desc = btn.classList.contains('desc'); // arrow down
+
+    // Переключаем классы у активной кнопки
+    if (asc) {
+        btn.classList.remove('asc');
+        btn.classList.add('desc');
+        sorting(sortKey, 'desc');
+
+    } else if (desc) {
+        btn.classList.remove('desc');
+        // return original []
+        books = [...originalBooks];
+        renderBooks(books);
+
+    } else {
+        btn.classList.add('asc');
+        sorting(sortKey, 'asc');
+    }
+
+}
+
+function sorting(key, direction = 'asc') {
+    books.sort((a, b) => {
+        const valueA = a[key]?.toString().toLowerCase() || '';
+        const valueB = b[key]?.toString().toLowerCase() || '';
+
+        if (direction === 'asc') {
+            return valueA.localeCompare(valueB);
+        } else {
+            return valueB.localeCompare(valueA);
+        }
+    });
+    renderBooks(books);
 }
 
 function clearFilterBooks() {
