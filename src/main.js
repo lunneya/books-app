@@ -24,13 +24,23 @@ const clearFilter = document.querySelector("#clearSearch"); // clear filter
 // table
 const btnArrow = document.querySelectorAll(".table-content-button");
 
+// pagination
+const paginationContainer = document.querySelector(".pagination-content-numbers");
+const prevBtn = document.querySelector("#prevBtn");
+const nextBtn = document.querySelector("#nextBtn");
+
 let books = [];
 let originalBooks = [];
+let filteredBooks = [];
+let currentPage = 1;
+let bookCount = 5;
 
+// localStorage
 if (localStorage.getItem('books')) {
     books = JSON.parse(localStorage.getItem('books'));
     originalBooks = [...books];
-    renderBooks(books);
+    filteredBooks = [...books]; // <== ключевая строка
+    renderPaginatedBooks();
 }
 
 form.addEventListener("submit", addBook);
@@ -40,15 +50,29 @@ modalBtn.addEventListener("click", showModal);
 closeModalBtn.addEventListener("click", closeModal);
 
 // filter by values
-filterByTitle.addEventListener("input", filterBtn);
-filterByAuthor.addEventListener("input", filterBtn);
-filterByDate.addEventListener("input", filterBtn);
+filterByBtn.addEventListener("click", filterBtn);
 
 filterByBtn.addEventListener("click", filterBtn); // listens for input, when a button pressed
 clearFilter.addEventListener("click", clearFilterBooks)
 
 // listens table btn
 btnArrow.forEach(btn => btn.addEventListener("click", stateArrow));
+
+// listener arrow
+prevBtn.addEventListener("click", () => {
+    if (currentPage > 1) {
+        currentPage--;
+        renderPaginatedBooks();
+    }
+});
+
+nextBtn.addEventListener("click", () => {
+    const totalPages = Math.ceil(books.length / bookCount);
+    if (currentPage < totalPages) {
+        currentPage++;
+        renderPaginatedBooks();
+    }
+})
 
 // functions
 function addBook(e) {
@@ -69,7 +93,7 @@ function addBook(e) {
 
     books.push(newBook);
     saveToLocalStorage();
-    renderBooks();
+    renderPaginatedBooks();
 
     formInputTitle.value= "";
     formInputAuthor.value= "";
@@ -102,15 +126,12 @@ function filterBooks(e) {
 
     const filterClass = e.target.value;
 
-    const bookList = document.querySelectorAll(".list-books");
-
-    bookList.forEach(book => {
-        book.classList.remove('list-hide');
-
-        if (filterClass !== 'all' && book.dataset.status !== filterClass) {
-            book.classList.add('list-hide');
-        }
+    filteredBooks = books.filter(book => {
+        return filterClass === 'all' || book.status === filterClass;
     });
+
+    currentPage = 1;
+    renderPaginatedBooks();
 }
 
 // Если параметра нет, то происходит рендер всех книг
@@ -123,10 +144,10 @@ const booksForRender = Array.isArray(b) ? b : (b ? [b] : books);
               <h1 class="list-title">${book.title}</h1>
               <span>${book.author}</span>
               <p>${book.date}</p>
-              <div class="list-actions">
-                <span class="list-status">${book.status}</span>
-                <button id=${book.id} class="delete-btn" data-action="delete">✕</button>
-              </div>
+<!--              <div class="list-actions">-->
+<!--                <span class="list-status">${book.status}</span>-->
+<!--                <button id=${book.id} class="delete-btn" data-action="delete">✕</button>-->
+<!--              </div>-->
             </li>`
 
         booksList.insertAdjacentHTML('beforeend', booksHTML);
@@ -142,7 +163,7 @@ function closeModal() {
     modalWindow.classList.remove("show");
 }
 
-function filterBtn(e) {
+function filterBtn() {
 
     // Собираем все значения из inputs в объект
     const filters = {
@@ -152,21 +173,29 @@ function filterBtn(e) {
     };
 
 
-    if (e.target === filterByBtn) {
-        // Фильтруем книги
-        const filteredBooks = books.filter(book => {
-            // Object.keys(filters) создаем массив: ['title', 'author', 'date']
-            // .every() проверяет, что каждое из условий true
-            return Object.keys(filters).every(key => {
+    // Фильтруем книги
+    filteredBooks = books.filter(book => {
+        // Object.keys(filters) создаем массив: ['title', 'author', 'date']
+        // .every() проверяет, что каждое из условий true
+        return Object.keys(filters).every(key => {
 
-                // Если input пустой — не фильтруем || проверяем, что книга включает в себя введенное значение
-                // String.prototype.includes отвечает за проверку, если введенное значение присутствует
-                return filters[key] === "" || book[key].toLowerCase().includes(filters[key]);
-            });
+            // Если input пустой — не фильтруем || проверяем, что книга включает в себя введенное значение
+            // String.prototype.includes отвечает за проверку, если введенное значение присутствует
+            return filters[key] === "" || book[key].toLowerCase().includes(filters[key]);
         });
+    });
 
-        renderBooks(filteredBooks);
-    }
+    currentPage = 1;
+    renderPaginatedBooks();
+}
+
+function clearFilterBooks() {
+    filterByTitle.value = "";
+    filterByAuthor.value = "";
+    filterByDate.value = "";
+    filteredBooks = [...books];
+    currentPage = 1;
+    renderPaginatedBooks();
 }
 
 function stateArrow(e) {
@@ -189,10 +218,9 @@ function stateArrow(e) {
 
     } else if (desc) {
         btn.classList.remove('desc');
-        // return original []
-        books = [...originalBooks];
-        renderBooks(books);
-
+        filteredBooks = [...originalBooks];
+        currentPage = 1;
+        renderPaginatedBooks();
     } else {
         btn.classList.add('asc');
         sorting(sortKey, 'asc');
@@ -201,26 +229,47 @@ function stateArrow(e) {
 }
 
 function sorting(key, direction = 'asc') {
-    books.sort((a, b) => {
+    filteredBooks.sort((a, b) => {
         const valueA = a[key]?.toString().toLowerCase() || '';
         const valueB = b[key]?.toString().toLowerCase() || '';
 
-        if (direction === 'asc') {
-            return valueA.localeCompare(valueB);
-        } else {
-            return valueB.localeCompare(valueA);
-        }
+        if (direction === 'asc') return valueA.localeCompare(valueB);
+        else return valueB.localeCompare(valueA);
     });
-    renderBooks(books);
-}
-
-function clearFilterBooks() {
-    filterByTitle.value = "";
-    filterByAuthor.value = "";
-    filterByDate.value = "";
-    renderBooks();
+    currentPage = 1;
+    renderPaginatedBooks();
 }
 
 function saveToLocalStorage() {
     localStorage.setItem('books', JSON.stringify(books));
+}
+
+function renderPaginatedBooks() {
+    const startIndex = (currentPage - 1) * bookCount;
+    const endIndex = startIndex + bookCount;
+    const paginatedBooks = filteredBooks.slice(startIndex, endIndex);
+
+    renderBooks(paginatedBooks);
+    renderPagination();
+}
+
+function renderPagination() {
+    const totalPages = Math.ceil(filteredBooks.length / bookCount); // фикс
+    paginationContainer.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+
+        if (i === currentPage) btn.classList.add('active');
+
+        btn.addEventListener("click", () => {
+            currentPage = i;
+            renderPaginatedBooks();
+        });
+        paginationContainer.appendChild(btn);
+    }
+
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
 }

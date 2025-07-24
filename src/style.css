@@ -55,7 +55,6 @@ body {
     width: 100%;
     background-color: white;
     border-radius: 16px;
-    border: 1px solid silver;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 24px;
     display: flex;
@@ -156,7 +155,6 @@ body {
 .list {
     width: 100%;
     background-color: white;
-    border: 1px solid silver;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 16px;
@@ -182,19 +180,19 @@ body {
     color: #333;
 }
 
-.list-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+/*.list-actions {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 12px;*/
+/*}*/
 
-.list-status {
-    padding: 6px 12px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    font-size: 14px;
-    color: #555;
-}
+/*.list-status {*/
+/*    padding: 6px 12px;*/
+/*    background-color: #f0f0f0;*/
+/*    border-radius: 8px;*/
+/*    font-size: 14px;*/
+/*    color: #555;*/
+/*}*/
 
 .list-hide {
     display: none;
@@ -277,6 +275,70 @@ body {
 
 .table-content-button.desc .arrow-down {
     color: teal;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.pagination-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background-color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-content button {
+    width: 40px;
+    height: 40px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.pagination-content button:hover {
+    background-color: teal;
+    color: #fff;
+    border-color: teal;
+}
+
+.pagination-content-numbers {
+    display: flex;
+    gap: 8px;
+}
+
+.pagination-content-numbers button {
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.pagination-content-numbers button:hover {
+    background-color: teal;
+    color: #fff;
+    border-color: teal;
+}
+
+.pagination-content-numbers button.active {
+    background-color: teal;
+    color: #fff;
+    border-color: teal;
 }
 
 /* MODAL */
