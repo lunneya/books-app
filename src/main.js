@@ -33,7 +33,7 @@ let books = [];
 let originalBooks = [];
 let filteredBooks = [];
 let currentPage = 1;
-let bookCount = 5;
+const bookCount = 5;
 
 // localStorage
 if (localStorage.getItem('books')) {
@@ -142,12 +142,12 @@ const booksForRender = Array.isArray(b) ? b : (b ? [b] : books);
     booksForRender.forEach(book => {
         const booksHTML = `<li class="list-books book" data-status="${book.status}">
               <h1 class="list-title">${book.title}</h1>
-              <span>${book.author}</span>
-              <p>${book.date}</p>
-<!--              <div class="list-actions">-->
-<!--                <span class="list-status">${book.status}</span>-->
-<!--                <button id=${book.id} class="delete-btn" data-action="delete">✕</button>-->
-<!--              </div>-->
+              <span class="list-author">${book.author}</span>
+              <div class="list-actions">
+                <p>${book.date}</p>
+                <span class="list-status">${book.status}</span>
+                <button id=${book.id} class="delete-btn" data-action="delete">✕</button>
+              </div>
             </li>`
 
         booksList.insertAdjacentHTML('beforeend', booksHTML);
@@ -172,6 +172,11 @@ function filterBtn() {
         date: filterByDate.value.trim().toLowerCase(),
     };
 
+    // filteredBooks = books.filter(book => {
+    //     return filters.title === '' || book.title.toLowerCase().includes(filters.title);
+    // }).filter(book => {
+    //     return filters.author === '' || book.author.toLowerCase().includes(filters.author);
+    // })
 
     // Фильтруем книги
     filteredBooks = books.filter(book => {

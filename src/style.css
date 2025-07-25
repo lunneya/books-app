@@ -65,7 +65,7 @@ body {
 /* Filter by Title/Author/Date */
 .filterBy {
     display: flex;
-    flex-direction: column;
+    /*flex-direction: column;*/
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -157,7 +157,6 @@ body {
     background-color: white;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -168,8 +167,11 @@ body {
 .list-books {
     display: flex;
     justify-content: space-between;
+    width: 600px;
+    height: 50px;
+    padding: 8px;
     align-items: center;
-    padding: 12px 16px;
+    /*padding: 12px 16px;*/
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -178,21 +180,31 @@ body {
 .list-title {
     font-size: 16px;
     color: #333;
+    width: 200px;
 }
 
-/*.list-actions {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    gap: 12px;*/
+.list-author {
+    width: 200px;
+}
+
+/*.list p {*/
+/*    width: 200px;*/
 /*}*/
 
-/*.list-status {*/
-/*    padding: 6px 12px;*/
-/*    background-color: #f0f0f0;*/
-/*    border-radius: 8px;*/
-/*    font-size: 14px;*/
-/*    color: #555;*/
-/*}*/
+.list-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 200px;
+}
+
+.list-status {
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #555;
+}
 
 .list-hide {
     display: none;
@@ -202,7 +214,7 @@ body {
 .table {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 600px;
     max-width: 600px;
     background-color: white;
     border-radius: 8px;
