@@ -260,7 +260,7 @@ function renderPaginatedBooks() {
 
 function renderPagination() {
     const totalPages = Math.ceil(filteredBooks.length / bookCount); // фикс
-    paginationContainer.innerHTML = "";
+    paginationContainer.innerHTML = '';
 
     for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement("button");
