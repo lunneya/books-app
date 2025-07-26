@@ -172,21 +172,24 @@ function filterBtn() {
         date: filterByDate.value.trim().toLowerCase(),
     };
 
-    // filteredBooks = books.filter(book => {
-    //     return filters.title === '' || book.title.toLowerCase().includes(filters.title);
-    // }).filter(book => {
-    //     return filters.author === '' || book.author.toLowerCase().includes(filters.author);
-    // })
-
     // Фильтруем книги
     filteredBooks = books.filter(book => {
         // Object.keys(filters) создаем массив: ['title', 'author', 'date']
-        // .every() проверяет, что каждое из условий true
-        return Object.keys(filters).every(key => {
+        // .some() ищет, по любому совпадению true
+        return Object.keys(filters).some(key => {
+            const filterValue = filters[key];
 
-            // Если input пустой — не фильтруем || проверяем, что книга включает в себя введенное значение
-            // String.prototype.includes отвечает за проверку, если введенное значение присутствует
-            return filters[key] === "" || book[key].toLowerCase().includes(filters[key]);
+            if (filterValue === "") return false;
+
+            // Проверка для title and author
+            return book[key].toLowerCase().includes(filterValue);
+
+            // Проверка для date
+            if (key === "date") {
+                const filterNumber = parseInt(filterValue, 10);
+                const bookDate = parseInt(book.date, 10);
+                return !isNaN(filterNumber) && bookDate === filterNumber;
+            }
         });
     });
 
@@ -235,11 +238,22 @@ function stateArrow(e) {
 
 function sorting(key, direction = 'asc') {
     filteredBooks.sort((a, b) => {
-        const valueA = a[key]?.toString().toLowerCase() || '';
-        const valueB = b[key]?.toString().toLowerCase() || '';
+        if (key === 'date') {
+            const valueA = parseInt(a[key], 10);
+            const valueB = parseInt(b[key], 10);
 
-        if (direction === 'asc') return valueA.localeCompare(valueB);
-        else return valueB.localeCompare(valueA);
+            if (isNaN(valueA) || isNaN(valueB)) return 0;
+            return direction === 'asc'
+                ? valueA - valueB
+                : valueB - valueA;
+
+        } else {
+            const valueA = a[key]?.toString().toLowerCase() || '';
+            const valueB = b[key]?.toString().toLowerCase() || '';
+            return direction === 'asc'
+                ? valueA.localeCompare(valueB)
+                : valueB.localeCompare(valueA);
+        }
     });
     currentPage = 1;
     renderPaginatedBooks();
